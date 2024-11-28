@@ -316,6 +316,7 @@ require('lazy').setup({
       spec = {
         { '<leader>c', group = '[C]ode', mode = { 'n', 'x' } },
         { '<leader>d', group = '[D]ocument' },
+        { '<leader>m', group = '[M]iniMap' },
         { '<leader>r', group = '[R]ename' },
         { '<leader>s', group = '[S]earch' },
         { '<leader>w', group = '[W]orkspace' },
@@ -891,6 +892,42 @@ require('lazy').setup({
 
       -- ... and there is more!
       --  Check out: https://github.com/echasnovski/mini.nvim
+
+      -- File browser from mini
+      require('mini.files').setup()
+
+      -- Indent visualiser
+      require('mini.indentscope').setup()
+
+      -- Window with buffer text overview & keymaps
+      local map = require 'mini.map'
+      require('mini.map').setup {
+        integrations = {
+          map.gen_integration.builtin_search(),
+          map.gen_integration.gitsigns(),
+          map.gen_integration.diagnostic(),
+        },
+      }
+
+      -- MiniMap keymaps
+      vim.keymap.set('n', '<Leader>mc', MiniMap.close, { desc = '[M]iniMap [C]lose' })
+      vim.keymap.set('n', '<Leader>mf', MiniMap.toggle_focus, { desc = '[M]iniMap toggle_[F]ocus' })
+      vim.keymap.set('n', '<Leader>mo', MiniMap.open, { desc = '[M]iniMap [O]pen' })
+      vim.keymap.set('n', '<Leader>mr', MiniMap.refresh, { desc = '[M]iniMap [R]efresh' })
+      vim.keymap.set('n', '<Leader>ms', MiniMap.toggle_side, { desc = '[M]iniMap toggle_[S]ide' })
+      vim.keymap.set('n', '<Leader>mt', MiniMap.toggle, { desc = '[M]iniMap [T]oggle' })
+
+      -- Move any selection in any direction e.g. visual line move around
+      require('mini.move').setup()
+
+      -- Show nvim sessions (local + global)
+      require('mini.sessions').setup()
+
+      -- Join and split arguments under cursor
+      require('mini.splitjoin').setup()
+
+      -- Neovim start screen, displays recent files etc
+      require('mini.starter').setup()
     end,
   },
   { -- Highlight, edit, and navigate code
@@ -966,6 +1003,9 @@ require('lazy').setup({
     },
   },
 })
+
+-- Open minimap on vim start
+MiniMap.open()
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et

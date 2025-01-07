@@ -1004,8 +1004,11 @@ require('lazy').setup({
   },
 })
 
--- Open minimap on vim start
-MiniMap.open()
+-- client server to allow external progrma to send commands to Neovim
+local pipepath = vim.fn.stdpath 'cache' .. '/server.pipe'
+if not vim.loop.fs_stat(pipepath) then
+  vim.fn.serverstart(pipepath)
+end
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et

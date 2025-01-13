@@ -9,4 +9,7 @@ return {
     name = 'rose-pine',
   },
   { 'ellisonleao/gruvbox.nvim', priority = 1000, config = true },
+  {
+    'github/copilot.vim',
+  },
 }
